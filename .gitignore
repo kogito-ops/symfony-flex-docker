@@ -13,27 +13,6 @@
 .DS_Store
 Thumbs.db
 
-# Docker overrides
-/docker-compose.override.yaml
-
-# PHP Code Style Fixer
-/.php_cs.cache
-
-###> symfony/framework-bundle ###
+# Docker environment customization
 /.env
-/public/bundles/
-/var/
-/vendor/
-###< symfony/framework-bundle ###
-
-###> symfony/webpack-encore-pack ###
-/node_modules/
-/public/build/
-npm-debug.log
-yarn-error.log
-###< symfony/webpack-encore-pack ###
-
-###> symfony/phpunit-bridge ###
-.phpunit
-/phpunit.xml
-###< symfony/phpunit-bridge ###
+/docker-compose.override.yaml
