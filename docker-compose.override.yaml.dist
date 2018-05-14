@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+
+    node:
+        volumes:
+            # Comment out the next line in production
+            - ./:/srv/app:rw
+        command: [ "yarn", "watch" ]
+
+    php:
+        build:
+            args:
+                APP_ENV: dev
+                VERSION: ^4.0
+        volumes:
+            # Comment out the next line in production
+            - ./:/srv/app:rw
+            # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
+            - /srv/app/var/
+            - /srv/app/var/cache/
+            - /srv/app/var/logs/
+            - /srv/app/var/sessions/
+
+    nginx:
+        volumes:
+            # Comment out the next line in production
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+            - ./public:/srv/app/public:ro
