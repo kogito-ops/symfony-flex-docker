@@ -7,19 +7,18 @@ Encore
     .setPublicPath('/build')
     .cleanupOutputBeforeBuild()
     .enableSourceMaps(!Encore.isProduction())
-    // create hashed filenames (e.g. app.abc123.css)
-    .enableVersioning(Encore.isProduction())
+    // uncomment to create hashed filenames (e.g. app.abc123.css)
+    // .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
     // .addEntry('js/app', './assets/js/app.js')
     // .addStyleEntry('css/app', './assets/css/app.scss')
-    // .addStyleEntry('css/vendor', './assets/css/vendor.scss')
 
-    // use Sass/SCSS files
-    .enableSassLoader()
+    // uncomment if you use Sass/SCSS files
+    // .enableSassLoader()
 
-    // use CSS post-processing
-    .enablePostCssLoader()
+    // uncomment if you want PostCSS processing
+    // .enablePostCssLoader()
 
     // uncomment for legacy applications that require $/jQuery as a global variable
     // .autoProvidejQuery()
