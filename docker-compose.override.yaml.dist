@@ -8,6 +8,14 @@ services:
             - ./:/srv/app:rw
         command: [ "yarn", "watch" ]
 
+    redis:
+        ports:
+            -  '6379:6379'
+
+    mariadb:
+        ports:
+            - '3306:3306'
+
     php:
         build:
             args:
@@ -17,13 +25,16 @@ services:
             # Comment out the next line in production
             - ./:/srv/app:rw
             # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
-            - /srv/app/var/
-            - /srv/app/var/cache/
-            - /srv/app/var/logs/
-            - /srv/app/var/sessions/
+            - "php_sf_var:/srv/app/var"
+            # Use this to bring in your personal composer settings
+            - "~/.composer:/root/.composer"
 
     nginx:
         volumes:
             # Comment out the next line in production
             - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
             - ./public:/srv/app/public:ro
+
+volumes:
+    php_sf_var:
+        driver: local

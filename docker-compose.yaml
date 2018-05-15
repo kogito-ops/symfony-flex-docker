@@ -21,7 +21,7 @@ services:
             dockerfile: ./docker/mariadb/Dockerfile
         restart: on-failure
         env_file:
-          - '.env'
+            - '.env'
         healthcheck:
             test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1']
             interval: 1m30s
@@ -35,12 +35,18 @@ services:
             context: ./
             dockerfile: ./docker/php-fpm/Dockerfile
         env_file:
-          - '.env'
+            - '.env'
+        depends_on:
+            - mariadb
+            - node
+            - redis
 
     nginx:
         build:
             context: ./
             dockerfile: ./docker/nginx/Dockerfile
+        depends_on:
+            - php
         ports:
             - '80:80'
             - '443:443'
