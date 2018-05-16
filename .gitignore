@@ -13,8 +13,7 @@
 .DS_Store
 Thumbs.db
 
-# Docker environment customization
-/.env
+# Docker overrides
 /docker-compose.override.yaml
 
 ###> symfony/framework-bundle ###

@@ -4,9 +4,14 @@
 **/.gitignore
 **/.gitattributes
 **/Thumbs.db
+.idea
+.vscode
+.drone.yml
 .dockerignore
 docker-compose.yaml
 docker-compose.override.yaml
+phpunit.xml.dist
 node_modules
+tests
 var
 vendor
