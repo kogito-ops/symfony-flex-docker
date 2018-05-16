@@ -1,4 +1,4 @@
-# Symfony Flex: dockerized - 🐋 = 💕
+# Symfony Flex: dockerized - 🐋 = 💕          [![Build status][bs-image]][bs-url]
 
 This is a template for bootstrapping your own [Symfony][symfony] Flex applications
 in a [Docker][docker] environment.
@@ -65,6 +65,9 @@ docker-compose exec php composer ...
 ```console
 docker-compose exec php bin/console ...
 ```
+
+[bs-image]: https://travis-ci.org/kogitoapp/symfonx-flex-docker.svg?branch=master
+[bs-url]: https://travis-ci.org/kogitoapp/symfonx-flex-docker
 
 [symfony]: https://symfony.com/
 [docker]: https://docker.com/
