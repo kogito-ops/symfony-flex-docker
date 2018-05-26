@@ -9,3 +9,10 @@ RUN chmod +x /usr/local/bin/docker-node-entrypoint
 WORKDIR /srv/app
 ENTRYPOINT ["docker-node-entrypoint"]
 CMD ["yarn"]
+
+# Copy app into container
+COPY . .
+
+RUN mkdir -p public/build \
+    && yarn install \
+    && yarn build
