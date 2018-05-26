@@ -18,7 +18,13 @@ RUN set -ex; \
     \
     # verify the signature
     export GNUPGHOME="$(mktemp -d)"; \
-    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4; \
+    for key in \
+    B42F6819007F00F88E364FD4036A9C25BF357DD4 \
+    ; do \
+    gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
+    gpg --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
+    gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
+    done && \
     gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu; \
     rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc; \
     \
