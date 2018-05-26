@@ -5,17 +5,25 @@ FROM php:7.2.5-fpm-alpine3.7
 LABEL maintainer="Kogito UG <brainz@kogitoapp.com>"
 
 RUN apk add --no-cache --virtual .persistent-deps \
+    freetype \
     git \
     icu-libs \
+    libjpeg \
+    libpng \
     zlib
 
 ENV APCU_VERSION 5.1.8
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
+    freetype-dev \
     icu-dev \
+    jpeg-dev \
+    libpng-dev \
     zlib-dev \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install \
+    gd \
     intl \
     pdo_mysql \
     zip \
