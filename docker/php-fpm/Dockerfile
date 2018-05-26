@@ -4,6 +4,7 @@ FROM composer:1.6.5
 FROM php:7.2.5-fpm-alpine3.7
 LABEL maintainer="Kogito UG <brainz@kogitoapp.com>"
 
+###> PHP extensions ###
 RUN apk add --no-cache --virtual .persistent-deps \
     freetype \
     git \
@@ -33,6 +34,7 @@ RUN set -xe \
     && docker-php-ext-enable --ini-name 05-opcache.ini opcache \
     && docker-php-ext-enable --ini-name 30-pdo_mysql.ini pdo_mysql \
     && apk del .build-deps
+###< PHP extensions ###
 
 COPY docker/php-fpm/php.ini /usr/local/etc/php/php.ini
 COPY --from=composer:1.6.5 /usr/bin/composer /usr/bin/composer
