@@ -5,7 +5,8 @@ services:
     node:
         volumes:
             # Comment out the next line in production
-            - './:/srv/app:rw'
+            - ./:/srv/app
+            - ./public/build/:/srv/app/public/build/
         command: [ 'yarn', 'watch' ]
 
     # redis:
@@ -23,15 +24,18 @@ services:
         #         APP_ENV: dev
         #         VERSION: ^4.0
         volumes:
-            - './:/srv/app:rw'
-            - /srv/app/var/
-            - /srv/app/var/cache/
-            - /srv/app/var/log/
-            - /srv/app/var/sessions/
+            - ./:/srv/app
+            - ./var:/srv/app/var/
+            - ./public/build/:/srv/app/public/build/
+            - ./public/bundles/:/srv/app/public/bundles/
             # Use this to bring in your personal composer settings
             - '~/.composer:/root/.composer'
 
     nginx:
+        ports:
+            - '8080:80'
         volumes:
             - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
             - ./public:/srv/app/public:ro
+            - ./public/build/:/srv/app/public/build/
+            - ./public/bundles/:/srv/app/public/bundles/
