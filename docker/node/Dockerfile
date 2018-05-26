@@ -1,6 +1,6 @@
 # vim:set ft=dockerfile:
 
-FROM node:8.11.1-alpine
+FROM node:8.11.2-alpine
 LABEL maintainer="Kogito UG <brainz@kogitoapp.com>"
 
 COPY docker/node/docker-entrypoint.sh /usr/local/bin/docker-node-entrypoint
