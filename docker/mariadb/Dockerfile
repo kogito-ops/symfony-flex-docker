@@ -42,7 +42,7 @@ RUN apk add --no-cache --virtual .persistent-deps \
     pwgen
 
 # install MariaDB
-ENV MARIADB_VERSION 10.2.14-r2
+ENV MARIADB_VERSION 10.2.15-r0
 RUN set -xe \
     && apk add --no-cache --virtual .persistent-deps \
     bash \
