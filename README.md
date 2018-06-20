@@ -10,7 +10,7 @@ with the following components:
 
 - MariaDB, version 10.2
 - Redis, version 4.0.9
-- PHP with FPM, version 7.2.5
+- PHP with FPM, version 7.2.6
 - Composer, version 1.6.5
 - NodeJS with Yarn, version 8.11.1
 

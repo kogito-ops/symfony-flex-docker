@@ -1,7 +1,7 @@
 # vim:set ft=dockerfile:
 
 FROM composer:1.6.5
-FROM php:7.2.5-fpm-alpine3.7
+FROM php:7.2.6-fpm-alpine3.7
 LABEL maintainer="Kogito UG <brainz@kogitoapp.com>"
 
 ###> PHP extensions ###

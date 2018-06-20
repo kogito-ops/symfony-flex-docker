@@ -11,7 +11,6 @@ if [ "$1" = 'yarn' ]; then
     if [ ! -f package.json ]; then
         # Create a blank project
 		yarn init -yp
-		yarn add @symfony/webpack-encore --dev
     elif [ "$APP_ENV" != 'prod' ]; then
         # Always try to reinstall deps when not in prod
         yarn install
