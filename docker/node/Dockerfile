@@ -13,6 +13,6 @@ CMD ["yarn"]
 # Copy app into container
 COPY . .
 
-RUN mkdir -p public/build \
-    && yarn install \
-    && yarn build
+# RUN mkdir -p public/build \
+#     && yarn install \
+#     && yarn build
