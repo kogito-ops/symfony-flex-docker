@@ -1,7 +1,7 @@
 # vim:set ft=dockerfile:
 
 FROM composer:1.6.5
-FROM php:7.2.6-fpm-alpine3.7
+FROM php:7.2.7-fpm-alpine3.7
 LABEL maintainer="Kogito UG <brainz@kogitoapp.com>"
 
 ###> PHP extensions ###
@@ -73,6 +73,5 @@ RUN composer create-project "symfony/skeleton:${VERSION}" . --stability=$STABILI
 COPY . .
 
 RUN mkdir -p var/cache var/logs var/sessions \
-    && composer install --prefer-dist --no-dev --no-progress --no-suggest --classmap-authoritative --no-interaction \
-    && composer clear-cache \
+    && composer install --prefer-dist --no-dev --no-scripts --no-progress --no-suggest --classmap-authoritative --no-interaction \
     && chown -R www-data var
