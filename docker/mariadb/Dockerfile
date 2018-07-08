@@ -1,6 +1,6 @@
 # vim:set ft=dockerfile:
 
-FROM alpine:edge
+FROM alpine:3.8
 LABEL maintainer="Kogito UG <brainz@kogitoapp.com>"
 
 # add gosu for easy step-down from root
