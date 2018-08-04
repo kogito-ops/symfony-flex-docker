@@ -3,6 +3,7 @@ version: '3.1'
 services:
 
     node:
+        container_name: symfony-node
         build:
             context: ./
             dockerfile: ./docker/node/Dockerfile
@@ -11,6 +12,7 @@ services:
             - webpack_assets:/srv/app/public/build/
 
     redis:
+        container_name: symfony-redis
         build:
             context: ./
             dockerfile: ./docker/redis/Dockerfile
@@ -18,6 +20,7 @@ services:
             - 'redis_data:/data'
 
     mariadb:
+        container_name: symfony-mariadb
         build:
             context: ./
             dockerfile: ./docker/mariadb/Dockerfile
@@ -33,6 +36,7 @@ services:
             - mariadb_data:/var/lib/mysql
 
     php:
+        container_name: symfony-php
         build:
             context: ./
             dockerfile: ./docker/php-fpm/Dockerfile
@@ -47,6 +51,7 @@ services:
             - bundle_assets:/srv/app/public/bundles/
 
     nginx:
+        container_name: symfony-nginx
         build:
             context: ./
             dockerfile: ./docker/nginx/Dockerfile
