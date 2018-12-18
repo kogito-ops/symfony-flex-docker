@@ -4,7 +4,7 @@ FROM alpine:3.8
 LABEL maintainer="Kogito UG <brainz@kogitoapp.com>"
 
 # add gosu for easy step-down from root
-ENV GOSU_VERSION 1.10
+ENV GOSU_VERSION 1.11
 ENV GOSU_ARCH amd64
 RUN set -ex; \
     \

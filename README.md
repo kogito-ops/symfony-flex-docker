@@ -9,10 +9,12 @@ Out of the box you will get containers optimized for size, using [Alpine Linux][
 with the following components:
 
 - MariaDB, version 10.2
-- Redis, version 4.0.9
-- PHP with FPM, version 7.2.7
-- Composer, version 1.6.5
-- NodeJS with Yarn, version 8.11.1
+- Redis, version 4.0
+- PHP with FPM, version 7.2
+- Composer, version 1.7
+- NodeJS with Yarn, version 10.14
+- Nginx, version 1.15
+- Symfony Flex, version 4.2
 
 By default this environment does not contain any Symfony or NodeJS project,
 as empty projects will automatically be bootstrapped upon starting the container
