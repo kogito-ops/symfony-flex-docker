@@ -12,18 +12,12 @@ services:
             - webpack_assets:/srv/app/public/build/
 
     redis:
-        container_name: symfony-redis
-        build:
-            context: ./
-            dockerfile: ./docker/redis/Dockerfile
+        image: redis:4.0.12-alpine
         volumes:
             - 'redis_data:/data'
 
     mariadb:
-        container_name: symfony-mariadb
-        build:
-            context: ./
-            dockerfile: ./docker/mariadb/Dockerfile
+        image: kogitoapp/mariadb:10.2.15
         restart: on-failure
         env_file:
             - .env
