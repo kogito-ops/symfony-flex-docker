@@ -1,8 +1,8 @@
 # vim:set ft=dockerfile:
 
-FROM composer:1.8.0
-FROM php:7.2.13-fpm-alpine3.8
-LABEL maintainer="Kogito UG <brainz@kogitoapp.com>"
+FROM composer:1.10.9
+FROM php:7.4.8-fpm-alpine3.11
+LABEL maintainer="Kogito UG <hello@kogito.network>"
 
 ###> PHP extensions ###
 RUN apk add --no-cache --virtual .persistent-deps \
@@ -11,9 +11,10 @@ RUN apk add --no-cache --virtual .persistent-deps \
     icu-libs \
     libjpeg \
     libpng \
+    libzip \
     zlib
 
-ENV APCU_VERSION 5.1.16
+ENV APCU_VERSION 5.1.18
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
@@ -21,8 +22,9 @@ RUN set -xe \
     icu-dev \
     jpeg-dev \
     libpng-dev \
+    libzip-dev \
     zlib-dev \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-configure gd \
     && docker-php-ext-install \
     gd \
     intl \
@@ -36,7 +38,7 @@ RUN set -xe \
     && apk del .build-deps
 
 COPY docker/php-fpm/php.ini /usr/local/etc/php/php.ini
-COPY --from=composer:1.8.0 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:1.10.9 /usr/bin/composer /usr/bin/composer
 COPY docker/php-fpm/docker-entrypoint.sh /usr/local/bin/docker-app-entrypoint
 RUN chmod +x /usr/local/bin/docker-app-entrypoint
 
@@ -59,7 +61,7 @@ ARG APP_ENV=prod
 ENV APP_ENV ${APP_ENV}
 
 # Allow to select skeleton version
-ARG VERSION="^4.2"
+ARG VERSION="^5.1"
 ENV VERSION ${VERSION}
 
 # Download the Symfony skeleton and leverage Docker cache layers

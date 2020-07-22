@@ -1,69 +1,82 @@
-version: '3.1'
+version: "3.7"
 
 services:
+  redis:
+    image: redis:5.0.9-alpine
+    volumes:
+      - "redis_data:/data"
 
-    node:
-        container_name: symfony-node
-        build:
-            context: ./
-            dockerfile: ./docker/node/Dockerfile
-        command: [ 'yarn', 'build' ]
-        volumes:
-            - webpack_assets:/srv/app/public/build/
+  mariadb:
+    container_name: symfony-mariadb
+    build:
+      context: ./
+      dockerfile: ./docker/mariadb/Dockerfile
+    restart: on-failure
+    env_file:
+      - .env
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "127.0.0.1",
+          "-u",
+          $MYSQL_USER,
+          "-p",
+          $MYSQL_PASSWORD,
+        ]
+      interval: 1m30s
+      timeout: 30s
+      retries: 10
+    volumes:
+      - mariadb_data:/var/lib/mysql
 
-    redis:
-        image: redis:4.0.12-alpine
-        volumes:
-            - 'redis_data:/data'
+  node:
+    container_name: symfony-node
+    build:
+      context: ./
+      dockerfile: ./docker/node/Dockerfile
+    command: ["yarn", "build"]
+    volumes:
+      - webpack_assets:/srv/app/public/build/
 
-    mariadb:
-        image: kogitoapp/mariadb:10.2.15
-        restart: on-failure
-        env_file:
-            - .env
-        healthcheck:
-            test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1', '-u', $MYSQL_USER, '-p', $MYSQL_PASSWORD]
-            interval: 1m30s
-            timeout: 30s
-            retries: 10
-        volumes:
-            - mariadb_data:/var/lib/mysql
+  php:
+    container_name: symfony-php
+    build:
+      context: ./
+      dockerfile: ./docker/php-fpm/Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - mariadb
+      - node
+    volumes:
+      - webpack_assets:/srv/app/public/build/
+      - bundle_assets:/srv/app/public/bundles/
 
-    php:
-        container_name: symfony-php
-        build:
-            context: ./
-            dockerfile: ./docker/php-fpm/Dockerfile
-        env_file:
-            - .env
-        depends_on:
-            - node
-            - redis
-            - mariadb
-        volumes:
-            - webpack_assets:/srv/app/public/build/
-            - bundle_assets:/srv/app/public/bundles/
-
-    nginx:
-        container_name: symfony-nginx
-        build:
-            context: ./
-            dockerfile: ./docker/nginx/Dockerfile
-        depends_on:
-            - php
-        ports:
-            - '80:80'
-            - '443:443'
-        volumes:
-            - webpack_assets:/srv/app/public/build/
-            - bundle_assets:/srv/app/public/bundles/
+  nginx:
+    container_name: symfony-nginx
+    build:
+      context: ./
+      dockerfile: ./docker/nginx/Dockerfile
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - webpack_assets:/srv/app/public/build/
+      - bundle_assets:/srv/app/public/bundles/
 
 volumes:
-    redis_data:
-        driver: local
-    mariadb_data:
-        driver: local
-    webpack_assets:
-        driver: local
-    bundle_assets:
-        driver: local
+  redis_data:
+    driver: local
+  mariadb_data:
+    driver: local
+  webpack_assets:
+    driver: local
+  bundle_assets:
+    driver: local

@@ -13,9 +13,18 @@ trim_trailing_whitespace = true
 [*.md]
 trim_trailing_whitespace = false
 
-[*.{json,php,toml,twig,yaml}]
+[*.{toml,yml,yaml}]
+indent_size = 2
+
+[*.{bash,sh}]
+indent_size = 4
+indent_style = tab
+
+[*.{ps1,bat}]
+indent_size = 4
+indent_style = tab
+end_of_line = crlf
+
+[*.{json,php,twig}]
 indent_size = 4
 indent_style = space
-
-[*.sh]
-indent_style = tab

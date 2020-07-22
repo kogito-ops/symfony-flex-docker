@@ -1,52 +1,50 @@
-version: '3.1'
+version: "3.7"
 
 services:
+  node:
+    volumes:
+      # Comment out the next line in production
+      - ./:/srv/app
+      - ./public/build/:/srv/app/public/build/
+    command: ["yarn", "watch"]
 
-    node:
-        volumes:
-            # Comment out the next line in production
-            - ./:/srv/app
-            - ./public/build/:/srv/app/public/build/
-        command: [ 'yarn', 'watch' ]
+  # redis:
+  #     ports:
+  #         -  '6379:6379'
 
-    # redis:
-    #     ports:
-    #         -  '6379:6379'
+  # mariadb:
+  #     ports:
+  #         - '3306:3306'
 
-    # mariadb:
-    #     ports:
-    #         - '3306:3306'
-
-    php:
-        # Uncomment to customize local builds
-        # build:
-        #     args:
-        #         APP_ENV: dev
-        #         VERSION: ^4.0
-
-        # Uncomment for SMTP catching
-        #depends_on:
-        #    - mailhog
-
-        volumes:
-            - ./:/srv/app
-            - ./var:/srv/app/var/
-            - ./public/build/:/srv/app/public/build/
-            - ./public/bundles/:/srv/app/public/bundles/
-            # Use this to bring in your personal composer settings
-            - '~/.composer:/root/.composer'
-
-    nginx:
-        ports:
-            - '8080:80'
-        volumes:
-            - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
-            - ./public:/srv/app/public:ro
-            - ./public/build/:/srv/app/public/build/
-            - ./public/bundles/:/srv/app/public/bundles/
+  php:
+    # Uncomment to customize local builds
+    # build:
+    #     args:
+    #         APP_ENV: dev
+    #         VERSION: ^4.0
 
     # Uncomment for SMTP catching
-    #mailhog:
-    #    image: kogitoapp/mailhog:1.0.0
-    #    ports:
-    #        - '8025:8025'
+    #depends_on:
+    #    - mailhog
+
+    volumes:
+      - ./:/srv/app
+      - ./var:/srv/app/var/
+      - ./public/build/:/srv/app/public/build/
+      - ./public/bundles/:/srv/app/public/bundles/
+      # Use this to bring in your personal composer settings
+      - "~/.composer:/root/.composer"
+
+  nginx:
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./public:/srv/app/public:ro
+      - ./public/build/:/srv/app/public/build/
+      - ./public/bundles/:/srv/app/public/bundles/
+  # Uncomment for SMTP catching
+  #mailhog:
+  #    image: kogitoapp/mailhog:1.0.0
+  #    ports:
+  #        - '8025:8025'
