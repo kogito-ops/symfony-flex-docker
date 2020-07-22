@@ -7,6 +7,7 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
+-   [Removed] generated file
 -   [Improved] environment
     -   [Changed] to MariaDB 10.4
     -   [Changed] to Redis 5.0
