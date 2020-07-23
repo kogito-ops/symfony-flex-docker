@@ -16,6 +16,10 @@ services:
   #     ports:
   #         - '3306:3306'
 
+  # postgres:
+  #     ports:
+  #         - '5432:5432'
+
   php:
     # Uncomment to customize local builds
     # build:

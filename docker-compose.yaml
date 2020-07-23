@@ -15,9 +15,25 @@ services:
     env_file:
       - .env
     healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  postgres:
+    container_name: symfony-postgres
+    build:
+      context: ./
+      dockerfile: ./docker/postgres/Dockerfile
+    restart: on-failure
+    env_file:
+      - .env
+    healthcheck:
       test:
         [
-          "CMD",
+          "CMD-SHELL",
           "mysqladmin",
           "ping",
           "-h",
@@ -27,11 +43,11 @@ services:
           "-p",
           $MYSQL_PASSWORD,
         ]
-      interval: 1m30s
-      timeout: 30s
-      retries: 10
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
 
   node:
     container_name: symfony-node
@@ -52,6 +68,7 @@ services:
     depends_on:
       - redis
       - mariadb
+      - postgres
       - node
     volumes:
       - webpack_assets:/srv/app/public/build/
@@ -75,6 +92,8 @@ volumes:
   redis_data:
     driver: local
   mariadb_data:
+    driver: local
+  postgres_data:
     driver: local
   webpack_assets:
     driver: local

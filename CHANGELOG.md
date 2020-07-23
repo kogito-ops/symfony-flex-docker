@@ -7,6 +7,7 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
+-   [Added] Postgres 12.3
 -   [Removed] generated file
 -   [Improved] environment
     -   [Changed] to MariaDB 10.4

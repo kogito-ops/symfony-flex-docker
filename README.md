@@ -1,7 +1,8 @@
 # Symfony Flex: dockerized - 🐋 = 💕 [![Build status][bs-image]][bs-url]
 
 This is a template for bootstrapping your own [Symfony][symfony] Flex applications
-in a [Docker][docker] environment.
+in a [Docker][docker] environment. The primary intention here is to provide a
+fully self-contained environment.
 
 ## What this environment provides
 
@@ -9,6 +10,7 @@ Out of the box you will get containers optimized for size, using [Alpine Linux][
 with the following components:
 
 -   MariaDB, version 10.4
+-   Postgres, version 12.3
 -   Redis, version 5.0
 -   PHP with FPM, version 7.4
 -   Composer, version 1.10
@@ -30,6 +32,9 @@ We provide a sample `docker-compose.override.yaml.dist` that can be used to
 customize container builds for e.g. developing your applications. In the given
 example live code will be mounted as Docker volume instead of having the code
 only contained within the built containers.
+
+To start working on a project, copy `docker-compose.override.yaml.dist` to
+`docker-compose.override.yaml` and adapt it for your specific project.
 
 ### Configuring the environment
 
