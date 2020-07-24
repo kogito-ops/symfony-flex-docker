@@ -7,6 +7,7 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
+-   [Added] PHP redis extension
 -   [Fixed] Postgres health check
 -   [Added] SMTP mail catcher MailHog
 -   [Added] health check / Postgres PHP mod

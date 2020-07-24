@@ -30,16 +30,22 @@ RUN set -xe \
     && docker-php-ext-install \
     gd \
     intl \
-    pdo_mysql \
     pdo_pgsql \
     zip \
     && pecl install \
     apcu-${APCU_VERSION} \
     && docker-php-ext-enable --ini-name 20-apcu.ini apcu \
     && docker-php-ext-enable --ini-name 05-opcache.ini opcache \
-    && docker-php-ext-enable --ini-name 30-pdo_mysql.ini pdo_mysql \
     && docker-php-ext-enable --ini-name 30-pdo_pgsql.ini pdo_pgsql \
     && apk del .build-deps
+
+RUN set -xe \
+    && apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS \
+    && pecl install -o -f redis  \
+    && echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini \
+    && rm -rf /usr/share/php \
+    && rm -rf /tmp/* \
+    && apk del .phpize-deps
 
 COPY docker/php-fpm/php.ini /usr/local/etc/php/php.ini
 COPY --from=composer:1.10.9 /usr/bin/composer /usr/bin/composer
