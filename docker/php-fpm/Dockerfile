@@ -11,6 +11,7 @@ RUN apk add --no-cache --virtual .persistent-deps \
     icu-libs \
     libjpeg \
     libpng \
+    libpq \
     libzip \
     zlib
 
@@ -23,18 +24,21 @@ RUN set -xe \
     jpeg-dev \
     libpng-dev \
     libzip-dev \
+    postgresql-dev \
     zlib-dev \
     && docker-php-ext-configure gd \
     && docker-php-ext-install \
     gd \
     intl \
     pdo_mysql \
+    pdo_pgsql \
     zip \
     && pecl install \
     apcu-${APCU_VERSION} \
     && docker-php-ext-enable --ini-name 20-apcu.ini apcu \
     && docker-php-ext-enable --ini-name 05-opcache.ini opcache \
     && docker-php-ext-enable --ini-name 30-pdo_mysql.ini pdo_mysql \
+    && docker-php-ext-enable --ini-name 30-pdo_pgsql.ini pdo_pgsql \
     && apk del .build-deps
 
 COPY docker/php-fpm/php.ini /usr/local/etc/php/php.ini

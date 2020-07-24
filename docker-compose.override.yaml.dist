@@ -10,26 +10,26 @@ services:
 
   # redis:
   #     ports:
-  #         -  '6379:6379'
+  #       - "6379:6379"
 
   # mariadb:
-  #     ports:
-  #         - '3306:3306'
+  #   ports:
+  #     - "3306:3306"
 
   # postgres:
-  #     ports:
-  #         - '5432:5432'
+  #   ports:
+  #     - "5432:5432"
 
   php:
     # Uncomment to customize local builds
     # build:
-    #     args:
-    #         APP_ENV: dev
-    #         VERSION: ^4.0
+    #   args:
+    #     APP_ENV: dev
+    #     VERSION: ^5.1
 
     # Uncomment for SMTP catching
-    #depends_on:
-    #    - mailhog
+    # depends_on:
+    #   - mailhog
 
     volumes:
       - ./:/srv/app
@@ -47,8 +47,9 @@ services:
       - ./public:/srv/app/public:ro
       - ./public/build/:/srv/app/public/build/
       - ./public/bundles/:/srv/app/public/bundles/
+
   # Uncomment for SMTP catching
-  #mailhog:
-  #    image: kogitoapp/mailhog:1.0.0
-  #    ports:
-  #        - '8025:8025'
+  mailhog:
+    image: kogitoapp/mailhog:1.0.0
+    ports:
+      - "8025:8025"
