@@ -28,8 +28,8 @@ services:
     #     VERSION: ^5.1
 
     # Uncomment for SMTP catching
-    # depends_on:
-    #   - mailhog
+    depends_on:
+      - mailhog
 
     volumes:
       - ./:/srv/app
@@ -40,6 +40,7 @@ services:
       - "~/.composer:/root/.composer"
 
   nginx:
+    # Uncomment to run on alternative port
     ports:
       - "8080:80"
     volumes:
@@ -50,6 +51,9 @@ services:
 
   # Uncomment for SMTP catching
   mailhog:
-    image: kogitoapp/mailhog:1.0.0
+    container_name: symfony-mailhog
+    build:
+      context: ./
+      dockerfile: ./docker/mailhog/Dockerfile
     ports:
       - "8025:8025"
