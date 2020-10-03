@@ -20,22 +20,23 @@ ENV LANG en_US.utf8
 RUN mkdir /docker-entrypoint-initdb.d
 
 ENV PG_MAJOR 12
-ENV PG_VERSION 12.3
-ENV PG_SHA256 94ed64a6179048190695c86ec707cc25d016056ce10fc9d229267d9a8f1dcf41
+ENV PG_VERSION 12.4
+ENV PG_SHA256 bee93fbe2c32f59419cb162bcc0145c58da9a8644ee154a30b9a5ce47de606cc
 
-RUN set -ex \
+RUN set -eux; \
     \
-    && wget -O postgresql.tar.bz2 "https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.bz2" \
-    && echo "$PG_SHA256 *postgresql.tar.bz2" | sha256sum -c - \
-    && mkdir -p /usr/src/postgresql \
-    && tar \
+    wget -O postgresql.tar.bz2 "https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.bz2"; \
+    echo "$PG_SHA256 *postgresql.tar.bz2" | sha256sum -c -; \
+    mkdir -p /usr/src/postgresql; \
+    tar \
     --extract \
     --file postgresql.tar.bz2 \
     --directory /usr/src/postgresql \
     --strip-components 1 \
-    && rm postgresql.tar.bz2 \
+    ; \
+    rm postgresql.tar.bz2; \
     \
-    && apk add --no-cache --virtual .build-deps \
+    apk add --no-cache --virtual .build-deps \
     bison \
     coreutils \
     dpkg-dev dpkg \
@@ -62,20 +63,21 @@ RUN set -ex \
     util-linux-dev \
     zlib-dev \
     icu-dev \
+    ; \
     \
-    && cd /usr/src/postgresql \
+    cd /usr/src/postgresql; \
     # update "DEFAULT_PGSOCKET_DIR" to "/var/run/postgresql" (matching Debian)
     # see https://anonscm.debian.org/git/pkg-postgresql/postgresql.git/tree/debian/patches/51-default-sockets-in-var.patch?id=8b539fcb3e093a521c095e70bdfa76887217b89f
-    && awk '$1 == "#define" && $2 == "DEFAULT_PGSOCKET_DIR" && $3 == "\"/tmp\"" { $3 = "\"/var/run/postgresql\""; print; next } { print }' src/include/pg_config_manual.h > src/include/pg_config_manual.h.new \
-    && grep '/var/run/postgresql' src/include/pg_config_manual.h.new \
-    && mv src/include/pg_config_manual.h.new src/include/pg_config_manual.h \
-    && gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
+    awk '$1 == "#define" && $2 == "DEFAULT_PGSOCKET_DIR" && $3 == "\"/tmp\"" { $3 = "\"/var/run/postgresql\""; print; next } { print }' src/include/pg_config_manual.h > src/include/pg_config_manual.h.new; \
+    grep '/var/run/postgresql' src/include/pg_config_manual.h.new; \
+    mv src/include/pg_config_manual.h.new src/include/pg_config_manual.h; \
+    gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"; \
     # explicitly update autoconf config.guess and config.sub so they support more arches/libcs
-    && wget -O config/config.guess 'https://git.savannah.gnu.org/cgit/config.git/plain/config.guess?id=7d3d27baf8107b630586c962c057e22149653deb' \
-    && wget -O config/config.sub 'https://git.savannah.gnu.org/cgit/config.git/plain/config.sub?id=7d3d27baf8107b630586c962c057e22149653deb' \
+    wget -O config/config.guess 'https://git.savannah.gnu.org/cgit/config.git/plain/config.guess?id=7d3d27baf8107b630586c962c057e22149653deb'; \
+    wget -O config/config.sub 'https://git.savannah.gnu.org/cgit/config.git/plain/config.sub?id=7d3d27baf8107b630586c962c057e22149653deb'; \
     # configure options taken from:
     # https://anonscm.debian.org/cgit/pkg-postgresql/postgresql.git/tree/debian/rules?h=9.5
-    && ./configure \
+    ./configure \
     --build="$gnuArch" \
     # "/usr/src/postgresql/src/backend/access/common/tupconvert.c:105: undefined reference to `libintl_gettext'"
     #		--enable-nls \
@@ -106,30 +108,34 @@ RUN set -ex \
     --with-libxslt \
     --with-icu \
     --with-llvm \
-    && make -j "$(nproc)" world \
-    && make install-world \
-    && make -C contrib install \
+    ; \
+    make -j "$(nproc)" world; \
+    make install-world; \
+    make -C contrib install; \
     \
-    && runDeps="$( \
+    runDeps="$( \
     scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
     | tr ',' '\n' \
     | sort -u \
     | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
-    )" \
-    && apk add --no-cache --virtual .postgresql-rundeps \
+    )"; \
+    apk add --no-cache --virtual .postgresql-rundeps \
     $runDeps \
     bash \
     su-exec \
     # tzdata is optional, but only adds around 1Mb to image size and is recommended by Django documentation:
     # https://docs.djangoproject.com/en/1.10/ref/databases/#optimizing-postgresql-s-configuration
     tzdata \
-    && apk del --no-network .build-deps \
-    && cd / \
-    && rm -rf \
+    ; \
+    apk del --no-network .build-deps; \
+    cd /; \
+    rm -rf \
     /usr/src/postgresql \
     /usr/local/share/doc \
     /usr/local/share/man \
-    && find /usr/local -name '*.a' -delete
+    ; \
+    \
+    postgres --version
 
 # make the sample config easier to munge (and "correct by default")
 RUN sed -ri "s!^#?(listen_addresses)\s*=\s*\S+.*!\1 = '*'!" /usr/local/share/postgresql/postgresql.conf.sample
@@ -143,6 +149,36 @@ VOLUME /var/lib/postgresql/data
 
 COPY docker/postgres/docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
+
+# We set the default STOPSIGNAL to SIGINT, which corresponds to what PostgreSQL
+# calls "Fast Shutdown mode" wherein new connections are disallowed and any
+# in-progress transactions are aborted, allowing PostgreSQL to stop cleanly and
+# flush tables to disk, which is the best compromise available to avoid data
+# corruption.
+#
+# Users who know their applications do not keep open long-lived idle connections
+# may way to use a value of SIGTERM instead, which corresponds to "Smart
+# Shutdown mode" in which any existing sessions are allowed to finish and the
+# server stops when all sessions are terminated.
+#
+# See https://www.postgresql.org/docs/12/server-shutdown.html for more details
+# about available PostgreSQL server shutdown signals.
+#
+# See also https://www.postgresql.org/docs/12/server-start.html for further
+# justification of this as the default value, namely that the example (and
+# shipped) systemd service files use the "Fast Shutdown mode" for service
+# termination.
+#
+STOPSIGNAL SIGINT
+#
+# An additional setting that is recommended for all users regardless of this
+# value is the runtime "--stop-timeout" (or your orchestrator/runtime's
+# equivalent) for controlling how long to wait between sending the defined
+# STOPSIGNAL and sending SIGKILL (which is likely to cause data corruption).
+#
+# The default in most runtimes (such as Docker) is 10 seconds, and the
+# documentation at https://www.postgresql.org/docs/12/server-start.html notes
+# that even 90 seconds may not be long enough in many instances.
 
 EXPOSE 5432
 CMD ["postgres"]

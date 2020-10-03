@@ -1,7 +1,7 @@
 # vim:set ft=dockerfile:
 
-FROM composer:1.10.9
-FROM php:7.4.8-fpm-alpine3.11
+FROM composer:1.10.13
+FROM php:7.4.11-fpm-alpine3.11
 LABEL maintainer="Kogito UG <hello@kogito.network>"
 
 ###> PHP extensions ###
@@ -50,7 +50,7 @@ RUN set -xe \
     && apk del .phpize-deps
 
 COPY docker/php-fpm/php.ini /usr/local/etc/php/php.ini
-COPY --from=composer:1.10.9 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:1.10.13 /usr/bin/composer /usr/bin/composer
 COPY docker/php-fpm/docker-entrypoint.sh /usr/local/bin/docker-app-entrypoint
 RUN chmod +x /usr/local/bin/docker-app-entrypoint
 
