@@ -1,7 +1,7 @@
 # vim:set ft=dockerfile:
 
-FROM composer:1.10.13
-FROM php:7.4.11-fpm-alpine3.11
+FROM composer:2.0.7
+FROM php:7.4.13-fpm-alpine3.11
 LABEL maintainer="Kogito UG <hello@kogito.network>"
 
 ###> PHP extensions ###
@@ -15,7 +15,7 @@ RUN apk add --no-cache --virtual .persistent-deps \
     libzip \
     zlib
 
-ENV APCU_VERSION 5.1.18
+ENV APCU_VERSION 5.1.19
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
@@ -50,7 +50,7 @@ RUN set -xe \
     && apk del .phpize-deps
 
 COPY docker/php-fpm/php.ini /usr/local/etc/php/php.ini
-COPY --from=composer:1.10.13 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.0.7 /usr/bin/composer /usr/bin/composer
 COPY docker/php-fpm/docker-entrypoint.sh /usr/local/bin/docker-app-entrypoint
 RUN chmod +x /usr/local/bin/docker-app-entrypoint
 
@@ -60,9 +60,6 @@ CMD ["php-fpm"]
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER 1
-
-# Use prestissimo to speed up builds
-RUN composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --optimize-autoloader --classmap-authoritative  --no-interaction
 
 # Allow to use development versions of Symfony
 ARG STABILITY=stable

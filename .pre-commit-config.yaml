@@ -1,15 +1,15 @@
 ---
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "v3.1.0"
+  - repo: https://github.com/pre-commit/pre-commit-hooks.git
+    rev: "v3.3.0"
     hooks:
       - id: check-merge-conflict
       - id: check-executables-have-shebangs
       - id: check-yaml
       - id: check-xml
       - id: end-of-file-fixer
-  - repo: https://github.com/prettier/prettier
-    rev: "2.0.5"
+  - repo: https://github.com/pre-commit/mirrors-prettier.git
+    rev: "8e0d199f4004a7f226ed7974fc3883d9c702bded"
     hooks:
       - id: prettier
         name: "Apply Code Formatting"

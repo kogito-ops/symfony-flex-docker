@@ -2,7 +2,7 @@ version: "3.7"
 services:
   redis:
     container_name: symfony-redis
-    image: redis:6.0.8-alpine
+    image: redis:6.0.9-alpine
     restart: on-failure
     env_file:
       - .env
@@ -47,15 +47,8 @@ services:
       - .env
     healthcheck:
       test:
-        - CMD-SHELL
-        - mysqladmin
-        - ping
-        - "-h"
-        - 127.0.0.1
-        - "-u"
-        - $MYSQL_USER
-        - "-p"
-        - $MYSQL_PASSWORD
+        - "CMD-SHELL"
+        - "pg_isready -U $POSTGRES_USER"
       interval: 10s
       timeout: 5s
       retries: 5
@@ -72,6 +65,7 @@ services:
       - build
     volumes:
       - "webpack_assets:/srv/app/public/build/"
+      - "bundle_assets:/srv/app/public/bundles/"
   php:
     container_name: symfony-php
     build:
@@ -85,6 +79,7 @@ services:
       - postgres
       - node
     volumes:
+      - "symfony_cache:/srv/app/var/"
       - "webpack_assets:/srv/app/public/build/"
       - "bundle_assets:/srv/app/public/bundles/"
   nginx:
@@ -103,9 +98,9 @@ services:
 volumes:
   redis_data:
     driver: local
-  mariadb_data:
-    driver: local
   postgres_data:
+    driver: local
+  symfony_cache:
     driver: local
   webpack_assets:
     driver: local
