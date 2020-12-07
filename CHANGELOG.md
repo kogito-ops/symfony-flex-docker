@@ -7,6 +7,7 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
+-   [Fixed] missing volume
 -   [Changed] to newer versions
 -   [Changed] to newer versions
 -   [Fixed] missing MySQL PDO driver

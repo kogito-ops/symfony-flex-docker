@@ -98,6 +98,8 @@ services:
 volumes:
   redis_data:
     driver: local
+  mariadb_data:
+    driver: local
   postgres_data:
     driver: local
   symfony_cache:
