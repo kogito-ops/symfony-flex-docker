@@ -9,7 +9,7 @@ repos:
       - id: check-xml
       - id: end-of-file-fixer
   - repo: https://github.com/pre-commit/mirrors-prettier.git
-    rev: "8e0d199f4004a7f226ed7974fc3883d9c702bded"
+    rev: "d0f1c0ddb04e215d2a92eb0e0de977b236d79f7d"
     hooks:
       - id: prettier
         name: "Apply Code Formatting"
