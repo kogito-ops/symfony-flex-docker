@@ -1,6 +1,6 @@
 # vim:set ft=dockerfile:
 
-FROM alpine:3.11
+FROM alpine:3.13
 LABEL maintainer="Kogito UG <hello@kogito.network>"
 
 # add gosu for easy step-down from root
@@ -45,7 +45,7 @@ RUN apk add --no-cache --virtual .persistent-deps \
     pwgen
 
 # install MariaDB
-ENV MARIADB_VERSION 10.4.15-r0
+ENV MARIADB_VERSION 10.5.8-r0
 RUN set -xe \
     && apk add --no-cache --virtual .persistent-deps \
     bash \

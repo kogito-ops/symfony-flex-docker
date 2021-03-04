@@ -1,10 +1,10 @@
 # vim:set ft=dockerfile:
 
-FROM alpine:3.11
+FROM alpine:3.13
 LABEL maintainer="Kogito UG <hello@kogito.network>"
 
 # Install MailHog:
-ENV MAILHOG_VERSION 1.0.0
+ENV MAILHOG_VERSION 1.0.1
 ENV MAILHOG_ARCH amd64
 
 RUN set -ex; \
