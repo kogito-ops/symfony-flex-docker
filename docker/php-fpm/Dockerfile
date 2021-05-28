@@ -1,7 +1,7 @@
 # vim:set ft=dockerfile:
 
-FROM composer:2.0.7
-FROM php:7.4.15-fpm-alpine3.13
+FROM composer:2.0.14
+FROM php:7.4.19-fpm-alpine3.13
 LABEL maintainer="Kogito UG <hello@kogito.network>"
 
 ###> PHP extensions ###
@@ -50,7 +50,7 @@ RUN set -xe \
     && apk del .phpize-deps
 
 COPY docker/php-fpm/php.ini /usr/local/etc/php/php.ini
-COPY --from=composer:2.0.7 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.0.14 /usr/bin/composer /usr/bin/composer
 COPY docker/php-fpm/docker-entrypoint.sh /usr/local/bin/docker-app-entrypoint
 RUN chmod +x /usr/local/bin/docker-app-entrypoint
 
@@ -77,6 +77,6 @@ ENV VERSION ${VERSION}
 RUN composer create-project "symfony/skeleton:${VERSION}" . --stability=$STABILITY --prefer-dist --no-dev --no-progress --no-scripts --no-plugins --no-interaction
 
 RUN mkdir -p var/cache var/logs var/sessions \
-    && composer install --prefer-dist --no-dev --no-scripts --no-progress --no-suggest --classmap-authoritative --no-interaction \
+    && composer install --prefer-dist --no-dev --no-scripts --no-progress --classmap-authoritative --no-interaction \
     && composer clear-cache \
     && chown -R www-data var

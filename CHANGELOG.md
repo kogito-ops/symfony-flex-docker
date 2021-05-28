@@ -7,7 +7,13 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
--   [Chnaged] to Alpine 3.13 based images
+-   [Changed] to new container images
+    -   [Changed] to MariaDB 10.5.9
+    -   [Changed] to nginx 1.20.1
+    -   [Changed] to NodeJS 14.17.0
+    -   [Changed] to PHP 7.4.19
+    -   [Changed] to Postgres 12.7
+-   [Changed] to Alpine 3.13 based images
 -   [Fixed] missing volume
 -   [Changed] to newer versions
 -   [Changed] to newer versions

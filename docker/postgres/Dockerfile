@@ -4,7 +4,7 @@ FROM alpine:3.13
 LABEL maintainer="Kogito UG <hello@kogito.network>"
 
 # 70 is the standard uid/gid for "postgres" in Alpine
-# https://git.alpinelinux.org/aports/tree/main/postgresql/postgresql.pre-install?h=3.11-stable
+# https://git.alpinelinux.org/aports/tree/main/postgresql/postgresql.pre-install?h=3.12-stable
 RUN set -eux; \
     addgroup -g 70 -S postgres; \
     adduser -u 70 -S -D -G postgres -H -h /var/lib/postgresql -s /bin/sh postgres; \
@@ -20,8 +20,8 @@ ENV LANG en_US.utf8
 RUN mkdir /docker-entrypoint-initdb.d
 
 ENV PG_MAJOR 12
-ENV PG_VERSION 12.6
-ENV PG_SHA256 df7dd98d5ccaf1f693c7e1d0d084e9fed7017ee248bba5be0167c42ad2d70a09
+ENV PG_VERSION 12.7
+ENV PG_SHA256 8490741f47c88edc8b6624af009ce19fda4dc9b31c4469ce2551d84075d5d995
 
 RUN set -eux; \
     \

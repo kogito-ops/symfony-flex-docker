@@ -13,7 +13,7 @@ trim_trailing_whitespace = true
 [*.md]
 trim_trailing_whitespace = false
 
-[*.{toml,yml,yaml}]
+[*.{toml,yml,yaml,xml}]
 indent_size = 2
 
 [*.{bash,sh}]

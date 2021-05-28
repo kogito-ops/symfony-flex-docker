@@ -9,13 +9,13 @@ fully self-contained environment.
 Out of the box you will get containers optimized for size, using [Alpine Linux][alpine]
 with the following components:
 
--   MariaDB, version 10.4
--   Postgres, version 12.3
--   Redis, version 5.0
--   PHP with FPM, version 7.4
--   Composer, version 1.10
--   NodeJS with Yarn, version 12.18
--   Nginx, version 1.18
+-   MariaDB, version 10.5.9
+-   Postgres, version 12.7
+-   Redis, version 6.2.3
+-   PHP with FPM, version 7.4.19
+-   Composer, version 2.0.14
+-   NodeJS with Yarn, version 14.17.0
+-   Nginx, version 1.20.1
 -   Symfony, version 5
 
 By default this environment does not contain any Symfony or NodeJS project,

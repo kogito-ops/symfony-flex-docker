@@ -23,14 +23,16 @@
   # assigned from the pool of core maintainers. Rotation is encouraged across
   # all maintainers, to ensure the release process is clear and up-to-date.
   people = [
-    "danielsreichenbach"
+    "danielsreichenbach",
+    "esoynov",
   ]
 
   [Org."Docs Maintainers"]
   # The Docs maintainers are the good souls of the project, delivering all the
   # resources needed for our users to get the ball rolling.
   people = [
-    "danielsreichenbach"
+    "danielsreichenbach",
+    "esoynov",
   ]
 
   [Org."Curators"]
@@ -44,7 +46,8 @@
   # - close an issue or pull request when it's an exact duplicate
   # - close an issue or pull request when it's inappropriate or off-topic
   people = [
-    "danielsreichenbach"
+    "danielsreichenbach",
+    "esoynov",
   ]
 
   [Org.Alumni]
@@ -64,5 +67,10 @@
 	Name = "Daniel S. Reichenbach"
 	Email = "daniel@kogito.network"
 	GitHub = "danielsreichenbach"
-	Gitea = "danielsreichenbach"
-	Bitbucket = "danielsreichenbach"
+	GitLab = "danielsreichenbach"
+
+  [people.esoynov]
+  Name = "Evgeny Soynov"
+  Email = "esoynov@kogito.network"
+	GitHub = "ZloeSabo"
+	GitLab = "esoynov"
