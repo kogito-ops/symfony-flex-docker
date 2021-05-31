@@ -1,7 +1,6 @@
 version: "3.8"
 services:
   redis:
-    container_name: symfony-redis
     image: docker.io/library/redis:6.2.3-alpine3.13
     restart: on-failure
     env_file:
@@ -17,7 +16,6 @@ services:
     volumes:
       - "redis_data:/data"
   mariadb:
-    container_name: symfony-mariadb
     build:
       context: ./
       dockerfile: ./docker/mariadb/Dockerfile
@@ -38,7 +36,6 @@ services:
     volumes:
       - "mariadb_data:/var/lib/mysql"
   postgres:
-    container_name: symfony-postgres
     build:
       context: ./
       dockerfile: ./docker/postgres/Dockerfile
@@ -56,18 +53,16 @@ services:
     volumes:
       - "postgres_data:/var/lib/postgresql/data"
   node:
-    container_name: symfony-node
     build:
       context: ./
       dockerfile: ./docker/node/Dockerfile
     command:
       - yarn
       - build
-    volumes:
-      - "webpack_assets:/srv/app/public/build/"
-      - "bundle_assets:/srv/app/public/bundles/"
+    # volumes:
+    #   - "webpack_assets:/srv/app/public/build/"
+    #   - "bundle_assets:/srv/app/public/bundles/"
   php:
-    container_name: symfony-php
     build:
       context: ./
       dockerfile: ./docker/php-fpm/Dockerfile
@@ -78,23 +73,22 @@ services:
       - mariadb
       - postgres
       - node
-    volumes:
-      - "symfony_cache:/srv/app/var/"
-      - "webpack_assets:/srv/app/public/build/"
-      - "bundle_assets:/srv/app/public/bundles/"
+    # volumes:
+    #   - "symfony_cache:/srv/app/var/"
+    #   - "webpack_assets:/srv/app/public/build/"
+    #   - "bundle_assets:/srv/app/public/bundles/"
   nginx:
-    container_name: symfony-nginx
     build:
       context: ./
       dockerfile: ./docker/nginx/Dockerfile
     depends_on:
       - php
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - "webpack_assets:/srv/app/public/build/"
-      - "bundle_assets:/srv/app/public/bundles/"
+      - "8080:80"
+      - "8443:443"
+    # volumes:
+    #   - "webpack_assets:/srv/app/public/build/"
+    #   - "bundle_assets:/srv/app/public/bundles/"
 volumes:
   redis_data:
     driver: local
