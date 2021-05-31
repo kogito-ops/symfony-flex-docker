@@ -7,6 +7,7 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
+-   [Changed] to Symfony 5.2
 -   [Changed] to use full registry path to support podman
 -   [Changed] to new container images
     -   [Changed] to MariaDB 10.5.9

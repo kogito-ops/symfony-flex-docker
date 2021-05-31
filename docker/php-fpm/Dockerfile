@@ -70,7 +70,7 @@ ARG APP_ENV=prod
 ENV APP_ENV ${APP_ENV}
 
 # Allow to select skeleton version
-ARG VERSION="^5.1"
+ARG VERSION="^5.2"
 ENV VERSION ${VERSION}
 
 # Download the Symfony skeleton and leverage Docker cache layers
