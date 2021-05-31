@@ -24,7 +24,10 @@ builds for the 1st time.
 
 ## Using the environment
 
-All the usual Symfony and Composer commands can and should be used with Docker.
+All the usual Symfony and Composer commands can and should be used with `docker`
+/ `docker-compose`.
+
+This repository also works when using `podman` / `podman-compose`.
 
 ### Customizing for development
 
