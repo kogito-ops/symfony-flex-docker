@@ -2,7 +2,7 @@ version: "3.7"
 services:
   redis:
     container_name: symfony-redis
-    image: redis:6.2.3-alpine3.13
+    image: docker.io/library/redis:6.2.3-alpine3.13
     restart: on-failure
     env_file:
       - .env

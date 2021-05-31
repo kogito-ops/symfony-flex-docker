@@ -1,6 +1,6 @@
 # vim:set ft=dockerfile:
 
-FROM nginx:1.20.1-alpine
+FROM docker.io/library/nginx:1.20.1-alpine
 LABEL maintainer="Kogito UG <hello@kogito.network>"
 
 WORKDIR /srv/app

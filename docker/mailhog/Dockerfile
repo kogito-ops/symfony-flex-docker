@@ -1,6 +1,6 @@
 # vim:set ft=dockerfile:
 
-FROM alpine:3.13
+FROM docker.io/library/alpine:3.13
 LABEL maintainer="Kogito UG <hello@kogito.network>"
 
 # Install MailHog:

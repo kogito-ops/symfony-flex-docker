@@ -7,6 +7,7 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
+-   [Changed] to use full registry path to support podman
 -   [Changed] to new container images
     -   [Changed] to MariaDB 10.5.9
     -   [Changed] to nginx 1.20.1
