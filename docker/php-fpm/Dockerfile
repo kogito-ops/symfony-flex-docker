@@ -58,6 +58,8 @@ WORKDIR /srv/app
 ENTRYPOINT ["docker-app-entrypoint"]
 CMD ["php-fpm"]
 
+RUN wget https://get.symfony.com/cli/installer -O - | bash
+
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
@@ -70,7 +72,7 @@ ARG APP_ENV=prod
 ENV APP_ENV ${APP_ENV}
 
 # Allow to select skeleton version
-ARG VERSION="^5.3"
+ARG VERSION="^5.2"
 ENV VERSION ${VERSION}
 
 # Download the Symfony skeleton and leverage Docker cache layers

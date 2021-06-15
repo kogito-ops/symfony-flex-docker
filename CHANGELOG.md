@@ -7,6 +7,7 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
+-   [Added] Symfony CLI
 -   [Changed] to new container images
     -   [Changed] to Composer 2.1.3
     -   [Changed] to PHP 7.4.20
