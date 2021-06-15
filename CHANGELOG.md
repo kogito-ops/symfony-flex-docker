@@ -5,8 +5,9 @@ and further references.
 
 Items starting with `DEPRECATION` are important deprecation notices.
 
-## Unreleased
+## v1.0.0 (2021-06-15)
 
+-   [Changed] version to 1.0.0
 -   [Added] Symfony CLI
 -   [Changed] to new container images
     -   [Changed] to Composer 2.1.3
