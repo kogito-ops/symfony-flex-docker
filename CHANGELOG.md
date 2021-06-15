@@ -5,6 +5,10 @@ and further references.
 
 Items starting with `DEPRECATION` are important deprecation notices.
 
+## Unreleased
+
+-   [Fixed] Symfony CLI deployment
+
 ## v1.0.0 (2021-06-15)
 
 -   [Changed] version to 1.0.0

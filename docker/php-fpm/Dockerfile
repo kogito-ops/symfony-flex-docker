@@ -58,7 +58,12 @@ WORKDIR /srv/app
 ENTRYPOINT ["docker-app-entrypoint"]
 CMD ["php-fpm"]
 
-RUN wget https://get.symfony.com/cli/installer -O - | bash
+ENV SYMFONY_SRC_URL https://github.com/symfony/cli/releases/download/v4.25.2/symfony_linux_amd64.gz
+RUN curl -fSL "${SYMFONY_SRC_URL}" -o "/tmp/symfony_linux_amd64.gz" \
+    && gunzip "/tmp/symfony_linux_amd64.gz" \
+    && mv -f "/tmp/symfony_linux_amd64" /usr/local/bin/symfony \
+    && chmod +x /usr/local/bin/symfony \
+    && rm -f "/tmp/symfony_linux_amd64"
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER 1
