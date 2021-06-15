@@ -7,6 +7,9 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
+-   [Changed] to new container images
+    -   [Changed] to Composer 2.1.3
+    -   [Changed] to PHP 7.4.20
 -   [Improved] podman support
     The Symfony Flex Docker Environment can now be used with docker/docker-compose
     and podman/podman-compose for rootless development!

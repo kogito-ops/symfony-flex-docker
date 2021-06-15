@@ -14,7 +14,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
         rm -Rf tmp/
     elif [ "$APP_ENV" != 'prod' ]; then
         # Always try to reinstall deps when not in prod
-        composer install --prefer-dist --no-progress --no-suggest --no-interaction
+        composer install --prefer-dist --no-progress --no-interaction
     fi
 
 	# Permissions hack because setfacl does not work on Mac and Windows

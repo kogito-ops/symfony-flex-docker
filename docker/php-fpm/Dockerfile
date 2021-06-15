@@ -1,7 +1,7 @@
 # vim:set ft=dockerfile:
 
-FROM docker.io/library/composer:2.0.14
-FROM docker.io/library/php:7.4.19-fpm-alpine3.13
+FROM docker.io/library/composer:2.1.3
+FROM docker.io/library/php:7.4.20-fpm-alpine3.13
 LABEL maintainer="Kogito UG <hello@kogito.network>"
 
 ###> PHP extensions ###
@@ -50,7 +50,7 @@ RUN set -xe \
     && apk del .phpize-deps
 
 COPY docker/php-fpm/php.ini /usr/local/etc/php/php.ini
-COPY --from=composer:2.0.14 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.1.3 /usr/bin/composer /usr/bin/composer
 COPY docker/php-fpm/docker-entrypoint.sh /usr/local/bin/docker-app-entrypoint
 RUN chmod +x /usr/local/bin/docker-app-entrypoint
 
@@ -70,7 +70,7 @@ ARG APP_ENV=prod
 ENV APP_ENV ${APP_ENV}
 
 # Allow to select skeleton version
-ARG VERSION="^5.2"
+ARG VERSION="^5.3"
 ENV VERSION ${VERSION}
 
 # Download the Symfony skeleton and leverage Docker cache layers

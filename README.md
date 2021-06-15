@@ -11,9 +11,9 @@ with the following components:
 
 -   MariaDB, version 10.5.9
 -   Postgres, version 12.7
--   Redis, version 6.2.3
--   PHP with FPM, version 7.4.19
--   Composer, version 2.0.14
+-   Redis, version 6.2.4
+-   PHP with FPM, version 7.4.20
+-   Composer, version 2.1.3
 -   NodeJS with Yarn, version 14.17.0
 -   Nginx, version 1.20.1
 -   Symfony, version 5
