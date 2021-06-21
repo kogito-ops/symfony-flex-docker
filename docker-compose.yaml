@@ -63,7 +63,8 @@ services:
       context: ./
       dockerfile: ./docker/node/Dockerfile
     command:
-      - yarn
+      - npm
+      - run
       - watch
     volumes:
       - ./:/srv/app:Z

@@ -77,13 +77,13 @@ ARG APP_ENV=prod
 ENV APP_ENV ${APP_ENV}
 
 # Allow to select skeleton version
-ARG VERSION="^5.2"
+ARG VERSION="^5.3"
 ENV VERSION ${VERSION}
 
 # Download the Symfony skeleton and leverage Docker cache layers
-RUN composer create-project "symfony/skeleton:${VERSION}" . --stability=$STABILITY --prefer-dist --no-dev --no-progress --no-scripts --no-plugins --no-interaction
+RUN composer create-project "symfony/skeleton:${VERSION}" . --stability=$STABILITY --prefer-dist --no-progress --no-interaction
 
 RUN mkdir -p var/cache var/logs var/sessions \
-    && composer install --prefer-dist --no-dev --no-scripts --no-progress --classmap-authoritative --no-interaction \
+    && composer install --prefer-dist --no-progress --no-interaction \
     && composer clear-cache \
     && chown -R www-data var

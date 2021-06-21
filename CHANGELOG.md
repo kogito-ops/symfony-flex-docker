@@ -7,6 +7,7 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
+-   [Improved] handling of composer install
 -   [Fixed] Symfony CLI deployment
 
 ## v1.0.0 (2021-06-15)
