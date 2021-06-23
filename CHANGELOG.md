@@ -7,6 +7,7 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
+-   [Changed] to APCU 5.1.20
 -   [Improved] handling of composer install
 -   [Fixed] Symfony CLI deployment
 

@@ -15,7 +15,7 @@ RUN apk add --no-cache --virtual .persistent-deps \
     libzip \
     zlib
 
-ENV APCU_VERSION 5.1.19
+ENV APCU_VERSION 5.1.20
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
