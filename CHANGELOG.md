@@ -5,8 +5,9 @@ and further references.
 
 Items starting with `DEPRECATION` are important deprecation notices.
 
-## Unreleased
+## v1.1.0 (2021-07-15)
 
+-   [Changed] version to 1.1.0
 -   [Added] Makefile for Symfony workflow
 -   [Changed] to new container images
     -   [Changed] to NodeJS 14.17.3
