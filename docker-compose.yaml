@@ -2,9 +2,11 @@ version: "3.8"
 services:
   mailhog:
     image: docker.io/mailhog/mailhog:v1.0.1
-    restart: ${RESTART_MODE}
+    restart: on-failure
     env_file:
       - .env
+    networks:
+      - mail
     ports:
       - 8025:8025
   redis:
@@ -20,6 +22,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 20s
+    networks:
+      - queue
     ports:
       - 6379:6379
     volumes:
@@ -47,9 +51,7 @@ services:
     volumes:
       - "mariadb_data:/var/lib/mysql"
   postgres:
-    build:
-      context: ./
-      dockerfile: ./docker/postgres/Dockerfile
+    image: docker.io/library/postgres:12.7-alpine
     restart: on-failure
     env_file:
       - .env
@@ -61,6 +63,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 20s
+    networks:
+      - database
     ports:
       - 5432:5432
     volumes:
@@ -79,13 +83,18 @@ services:
     build:
       context: ./
       dockerfile: ./docker/php-fpm/Dockerfile
-    env_file:
-      - .env
+    environment:
+      APP_ENV: dev
     depends_on:
       - mailhog
       - redis
       - postgres
       - node
+    networks:
+      - application
+      - database
+      - mail
+      - queue
     volumes:
       - ./:/srv/app:Z
       # Use this to bring in your personal composer settings
@@ -96,12 +105,21 @@ services:
       dockerfile: ./docker/nginx/Dockerfile
     depends_on:
       - php
+    networks:
+      - application
     ports:
       - "8080:80"
       - "8443:443"
     volumes:
       - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
       - ./public:/srv/app/public:Z
+
+networks:
+  application:
+  database:
+  mail:
+  queue:
+
 volumes:
   redis_data:
     driver: local
