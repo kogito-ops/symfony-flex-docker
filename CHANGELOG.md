@@ -7,6 +7,9 @@ Items starting with `DEPRECATION` are important deprecation notices.
 
 ## Unreleased
 
+-   [Changed] to new container images
+    -   [Changed] to NodeJS 14.17.3
+    -   [Changed] to PHP 7.4.21
 -   [Changed] to use prebuilt Postgres Alpine image
 -   [Changed] to APCU 5.1.20
 -   [Improved] handling of composer install

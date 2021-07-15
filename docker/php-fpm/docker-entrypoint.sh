@@ -12,8 +12,8 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
         composer create-project "symfony/skeleton:$VERSION" tmp --stability=$STABILITY --prefer-dist --no-progress --no-interaction
         cp -Rp tmp/. .
         rm -Rf tmp/
-    elif [ "$APP_ENV" != 'prod' ]; then
-        # Always try to reinstall deps when not in prod
+    elif [ ! -d vendor ]; then
+        # Always try to reinstall deps when not vendor dir is missing
         composer install --prefer-dist --no-progress --no-interaction
     fi
 

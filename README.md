@@ -12,7 +12,7 @@ with the following components:
 -   MariaDB, version 10.5.9
 -   Postgres, version 12.7
 -   Redis, version 6.2.4
--   PHP with FPM, version 7.4.20
+-   PHP with FPM, version 7.4.21
 -   Composer, version 2.1.3
 -   NodeJS with Yarn, version 14.17.0
 -   Nginx, version 1.20.1
